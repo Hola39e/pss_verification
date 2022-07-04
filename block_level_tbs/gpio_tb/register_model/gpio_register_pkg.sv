@@ -44,5 +44,90 @@ package gpio_register_pkg;
     
     endclass: rgpio_ctrl
 
-    
+    typedef uvm_register_base regs_array[];
+
+class gpio_register_file extends uvm_register_file;
+
+rand rgpio_ro gpio_in_reg;
+rand rgpio_rw gpio_out_reg;
+rand rgpio_rw gpio_oe_reg;
+rand rgpio_rw gpio_inte_reg;
+rand rgpio_rw gpio_ptrig_reg;
+rand rgpio_rw gpio_aux_reg;
+rand rgpio_ctrl gpio_ctrl_reg;
+rand rgpio_rw gpio_ints_reg;
+rand rgpio_rw gpio_eclk_reg;
+rand rgpio_rw gpio_nec_reg;
+
+    function new(string name = "gpio_register_file",
+                uvm_named_object register_container = null );
+
+    super.new(name, register_container);
+
+    gpio_in_reg = new("gpio_in", this);
+    gpio_in_reg.WMASK = 32'b00000000000000000000000000000000;
+    gpio_out_reg = new("gpio_out", this);
+    gpio_oe_reg = new("gpio_oe", this);
+    gpio_inte_reg = new("gpio_inte", this);
+    gpio_ptrig_reg = new("gpio_ptrig", this);
+    gpio_aux_reg = new("gpio_aux", this);
+    gpio_ctrl_reg = new("gpio_ctrl", this);
+    gpio_ints_reg = new("gpio_ints", this);
+    gpio_eclk_reg = new("gpio_eclk", this);
+    gpio_nec_reg = new("gpio_nec", this);
+
+    this.add_register(gpio_in_reg.get_fullname(), 32'h0000_0000, gpio_in_reg, "GPI");
+    this.add_register(gpio_out_reg.get_fullname(), 32'h0000_0004, gpio_out_reg, "GPO");
+    this.add_register(gpio_oe_reg.get_fullname(), 32'h0000_0008, gpio_oe_reg, "GPOE");
+    this.add_register(gpio_inte_reg.get_fullname(), 32'h0000_000c, gpio_inte_reg, "INTE");
+    this.add_register(gpio_ptrig_reg.get_fullname(), 32'h0000_0010, gpio_ptrig_reg, "PTRIG");
+    this.add_register(gpio_aux_reg.get_fullname(), 32'h0000_0014, gpio_aux_reg, "AUX");
+    this.add_register(gpio_ctrl_reg.get_fullname(), 32'h0000_0018, gpio_ctrl_reg, "CTRL");
+    this.add_register(gpio_ints_reg.get_fullname(), 32'h0000_001c, gpio_ints_reg, "INTS");
+    this.add_register(gpio_eclk_reg.get_fullname(), 32'h0000_0020, gpio_eclk_reg, "ECLK");
+    this.add_register(gpio_nec_reg.get_fullname(), 32'h0000_0024, gpio_nec_reg, "NEC");
+endfunction
+
+    function bit check_valid_address(address_t address);
+        bit result;
+
+        result = addrSpace.exists(address);
+        return result;
+    endfunction: check_valid_address
+
+    function regs_array get_regs();
+        return '{gpio_in_reg,
+                gpio_out_reg,
+                gpio_oe_reg,
+                gpio_inte_reg,
+                gpio_ptrig_reg,
+                gpio_aux_reg,
+                gpio_ctrl_reg,
+                gpio_ints_reg,
+                gpio_eclk_reg,
+                gpio_nec_reg};
+    endfunction: get_regs
+
+    endclass: gpio_register_file
+
+    typedef uvm_register_file reg_file_array[];
+
+    class gpio_register_map extends uvm_register_map;
+
+    gpio_register_file gpio_reg_file;
+
+    function new(string name, uvm_named_object parent);
+        super.new(name, parent);
+        gpio_reg_file = new("gpio_reg_file", this);
+        this.add_register_file(gpio_reg_file, 0);
+    endfunction
+
+    function reg_file_array get_register_files;
+        return '{gpio_reg_file};
+    endfunction: get_register_files;
+
+endclass: gpio_register_map
+
+`include "gpio_register_coverage.svh"
+
 endpackage

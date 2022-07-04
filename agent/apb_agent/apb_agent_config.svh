@@ -33,3 +33,7 @@ function apb_agent_config apb_agent_config::get_config(uvm_conponent c);
 
     return t;
 endfunction
+
+function apb_agent_config::new(string name = "apb_agent_config");
+    super.new(name);
+endfunction

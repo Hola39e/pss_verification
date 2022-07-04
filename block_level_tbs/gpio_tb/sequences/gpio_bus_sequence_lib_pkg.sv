@@ -38,8 +38,8 @@ package gpio_bus_sequence_lib_pkg
             register_seq_item register_read = register_seq_item::type_id::create("register_read");
 
             $cast(register_read.address, gpio_rm.lookup_register_address_by_name(write_reg, addr_valid));
-            register_write.data = write_data;
-            adapter.write(register_write);
+            adapter.read(register_read)
+            seq_data = register_read.data;
         endtask
 
         task write();
@@ -51,6 +51,15 @@ package gpio_bus_sequence_lib_pkg
             adapter.write(register_write);
         endtask
 
-        
+        task random_write(string write_reg);
+            register_seq_item register_write = register_seq_item::type_id::create("register_write");
+            bit addr_valid;
+
+            assert(register_write.randomize());
+            $cast(register_write.address, gpio_rm.lookup_register_address_by_name(write_reg, addr_valid));
+            adapter.write(register_write);
+        endtask
     endclass
+
+    
 endpackage

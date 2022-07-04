@@ -1,55 +1,69 @@
-class gpio_env_config extends uvm_object;
+class gpio_env extends uvm_env;
+    `uvm_component_utils(gpio_env)
 
-    localparam string s_my_config_id = "gpio_env_config";
-    localparam string s_no_config_id = "no config";
-    localparam string s_my_config_type_error_id = "config type error";
-    
-    // UVM Factory Registration Macro
-    //
-    `uvm_object_utils(gpio_env_config)
+    apb_agent m_apb_agent;
+    gpio_agent m_GPO_agent;
+    gpio_agent m_GPOE_agent;
+    gpio_agent m_GPI_agent;
+    gpio_agent m_AUX_agent;
+    gpio_register_coverage m_reg_cov_monitor;
+    gpio_virtual_sequencer m_v_sqr;
+    gpio_reg_scoreboard m_reg_sb;
+    gpio_out_scoreboard m_out_sb;
+    gpio_in_scoreboard m_in_sb;
+    gpio_env_config m_cfg;
 
+    extern function new(string name = "gpio_env", uvm_component parent = null);
+    extern function void build_phase(uvm_phase phase);
+    extern function void connect_phase(uvm_phase phase);
 
-    bit has_apb_agent = 1;
-    bit has_GPO_agent = 1;
-    bit has_GPOE_agent = 1;
-    bit has_GPI_agent = 1;
-    bit has_AUX_agent = 1;
-    bit has_scoreboard = 1;
-    bit has_functional_coverage = 1;
-    bit has_virtual_sequencer = 1;
-    bit has_reg_scoreboard = 1;
-    bit has_out_scoreboard = 1;
-    bit has_in_scoreboard = 1;
-    // Configurations for the sub_components
-    apb_agent_config m_apb_agent_cfg;
-    gpio_agent_config m_GPO_agent_cfg;
-    gpio_agent_config m_GPOE_agent_cfg;
-    gpio_agent_config m_GPI_agent_cfg;
-    gpio_agent_config m_AUX_agent_cfg;
-
-    virtual intr_if INTR;
-
-    uvm_register_map gpio_rm;
-
-    extern task wait_for_interrupt;
-    extern static function gpio_env_config get_config( uvm_component c);
-    // Standard UVM Methods:
-    extern function new(string name = "gpio_env_config");
 endclass
 
-function gpio_env_config::new(string name = "gpio_env_config");
-    super.new(name);
+
+function gpio_env::new(string name = "gpio_env", uvm_component parent = null);
+    super.new(name, parent);
 endfunction
 
-task gpio_env_config::wait_for_interrupt;
-    @(posedge INTR.IRQ);
-endtask: wait_for_interrupt
+function void gpio_env::build_phase(uvm_phase phase);
+    if (!uvm_config_db #(gpio_env_config)::get(this, "", "gpio_env_config", m_cfg) )
+    `uvm_fatal("CONFIG_LOAD", "Cannot get() configuration gpio_env_config from uvm_config_db. Have you set() it?")
+    if(m_cfg.has_apb_agent) begin
+    uvm_config_db #(apb_agent_config)::set(this,"m_apb_agent*", "apb_agent_config", m_cfg.m_apb_agent_cfg);
+    m_apb_agent = apb_agent::type_id::create("m_apb_agent", this);
+    end
+    if(m_cfg.has_GPO_agent) begin
+    uvm_config_db #(gpio_agent_config)::set(this,"m_GPO_agent*", "gpio_agent_config", m_cfg.m_GPO_agent_cfg);
+    m_GPO_agent = gpio_agent::type_id::create("m_GPO_agent", this);
+    end
+    if(m_cfg.has_GPOE_agent) begin
+    uvm_config_db #(gpio_agent_config)::set(this,"m_GPOE_agent*", "gpio_agent_config", m_cfg.m_GPOE_agent_cfg);
+    m_GPOE_agent = gpio_agent::type_id::create("m_GPOE_agent", this);
+    end
+    if(m_cfg.has_GPI_agent) begin
+    uvm_config_db #(gpio_agent_config)::set(this,"m_GPI_agent*", "gpio_agent_config", m_cfg.m_GPI_agent_cfg);
+    m_GPI_agent = gpio_agent::type_id::create("m_GPI_agent", this);
+    end
+    if(m_cfg.has_AUX_agent) begin
+    uvm_config_db #(gpio_agent_config)::set(this,"m_AUX_agent*", "gpio_agent_config", m_cfg.m_AUX_agent_cfg);
+    m_AUX_agent = gpio_agent::type_id::create("m_AUX_agent", this);
+    end
+    if(m_cfg.has_virtual_sequencer) begin
+    m_v_sqr = gpio_virtual_sequencer::type_id::create("m_v_sqr", this);
+    end
+    if(m_cfg.has_functional_coverage) begin
+    m_reg_cov_monitor = gpio_register_coverage::type_id::create("m_reg_cov_monitor", this);
+    end
+    if(m_cfg.has_reg_scoreboard) begin
+    m_reg_sb = gpio_reg_scoreboard::type_id::create("m_reg_sb", this);
+    end
+    if(m_cfg.has_out_scoreboard) begin
+    m_out_sb = gpio_out_scoreboard::type_id::create("m_out_sb", this);
+    end
+    if(m_cfg.has_in_scoreboard) begin
+    m_in_sb = gpio_in_scoreboard::type_id::create("m_in_sb", this);
+    end
+endfunction:build_phase
 
-function gpio_env_config gpio_env_config::get_config( uvm_component c );
-    gpio_env_config t;
-
-    if (!uvm_config_db #(gpio_env_config)::get(c, "", s_my_config_id, t) )
-        `uvm_fatal("CONFIG_LOAD", $sformatf("Cannot get() configuration %s from uvm_config_db. Have you set() it?", s_my_config_id))
-
-    return t;
+function void connect_phase(uvm_phase phase);
+    
 endfunction
