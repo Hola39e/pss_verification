@@ -8,6 +8,7 @@ package gpio_env_pkg;
     import gpio_agent_pkg::*;
     import uvm_register_pkg::*;
     import gpio_register_pkg::*;
+	import gpio_register_model_pkg::*;
 
     localparam string s_my_config_id = "gpio_env_config";
     localparam string s_no_config_id = "no config";
