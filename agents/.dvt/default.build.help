@@ -1,0 +1,93 @@
+
+# DVT BUILD CONFIGURATION QUICK REFERENCE
+
+# In a .build file you specify the source files to be compiled and various compiler directives.
+# You can use autocomplete and hyperlinks in a .build file.
+
+# Each +dvt_init corresponds to a simulator invocation.
+# You can specify only one library per invocation.
+
++dvt_init # Compile in default work lib
+file1.v
+file2.sv
+/some/path/*.sv              # All *.sv files located directly under /some/path
+/some/path/**/*.sv           # All *.sv files located anywhere under /some/path
++define+CHIP_LEVEL_ID=0x10   # Define a preprocessing macro; value is optional.
++incdir+$UVM_HOME/src/       # Specify search directory for `include.
+-y src/lib                   # Specify search directory for module declarations.
+-v src/source_library_file.v # Specify search file for module declarations.
+
++dvt_init -work lib2 # Compile in lib2
+other1.v
+other2.sv
+
+# Specify a compatibility mode when reusing argument files for a particular simulator.
+# Can be one of: dvt, ius.irun, vcs.vlogan, vcs.vhdlan; dvt is default.
++dvt_init+dvt
+-f args.f # args.f contains files to be compiled and other simulator arguments
+
+# Specify the compilation root when using paths relative to a sim dir other than the project root.
+# You can specify only one compilation root per invocation.
++dvt_init
++dvt_compilation_root+/path/to/sim/directory
+rtl/my_mod.v   # This path is relative to compilation root.
+sv/vip_pkg.sv  # This path is relative to compilation root.
+
+# Shortcut for compiling the UVM library.
+-uvm
+
+# Set environment variables.
+# Applies only to the current invocation.
++dvt_setenv+UVM_HOME=/path/to/the/uvm/library
+
+# Specify a file using an environment variable.
+$UVM_HOME/src/uvm_pkg.sv
+
+# Compile specified libraries from the provided Xilinx installation directory.
++dvt_init_xilinx+UNISIMS_VER+UNIMACRO_VER
+# You must set $DVT_XILINX_HOME to Vivado/ISE installation directory.
++dvt_setenv+DVT_XILINX_HOME=/apps/xilinx/ise_13.2/ISE_DS/ISE
+
+# Automatically identify and compile all the source files in another location.
++dvt_init_auto
++dvt_compilation_root+/path/to/location
+
+# Files with .ext1, .ext2, ... extensions are compiled using the specified syntax.
+# Applies only to the current invocation.
++dvt_ext_map+SystemVerilog_2009+.ext1+.ext2
++dvt_ext_map+VHDL_2008+.ext3+.ext4
+
+# Don't compile files matching the provided path patterns.
+# Applies only to the current invocation.
++dvt_skip_compile+/path/to/some_file.v
++dvt_skip_compile+/path/to/some/folder/*
++dvt_skip_compile+*/some/folder/*
+
+# Stop parsing a file if it takes more than 60 seconds. 0 means don't stop.
+# Applies to all invocations (global directive).
++dvt_file_compile_timeout+60
+
+# Limit the scope of full build checks in order (speed-up full build compilation).
+# Applies to all invocations (global directive).
++dvt_full_compile_checks+FULL                           # [DEFAULT] all
++dvt_full_compile_checks+LIBS+lib1+lib2                 # only specified libs
++dvt_full_compile_checks+NOT_LIBS+lib1+lib2             # all except the specified libs
++dvt_full_compile_checks+PKGS+lib1::pkg1+lib2::pkg2     # only the specified packages
++dvt_full_compile_checks+NOT_PKGS+lib1::pkg1+lib2::pkg2 # all except the specified packages
++dvt_full_compile_checks+OFF                            # nothing
+
+# Limit the scope of incremental build checks (speed-up incremental compilation).
+# Applies to all invocations (global directive).
++dvt_incremental_compile_checks+FULL  # all is checked
++dvt_incremental_compile_checks+LIB   # [DEFAULT] only the library corresponding to changed file(s)
++dvt_incremental_compile_checks+PKG   # only the package corresponding to changed file(s)
++dvt_incremental_compile_checks+FILE  # only the changed file(s)
++dvt_incremental_compile_checks+OFF   # nothing
+
+# Stop incremental compilation if it takes more than 10 seconds. 0 means don't stop.
+# Applies to all invocations (global directive).
++dvt_incremental_compile_timeout+10
+
+# Reduce the depth of the virtual filesystem hierarchy under DVT Auto-Linked
+# Applies to all invocations (global directive).
++dvt_auto_link_root+ip_1=/path/to/ip_1

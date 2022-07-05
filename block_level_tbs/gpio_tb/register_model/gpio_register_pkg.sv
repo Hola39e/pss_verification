@@ -1,132 +1,132 @@
 package gpio_register_pkg;
 
-    import uvm_pkg::*;
-    `include "uvm_marcos.svh"
-    import uvm_register_pkg::*;
-    import apb_agent_pkg::*;
+	import uvm_pkg::*;
+	`include "uvm_macros.svh"
+	import uvm_register_pkg::*;
+	import apb_agent_pkg::*;
 
-    typedef struct packed {logic[31:0] bits;} word_t;
-    typedef struct packed {bit [29:0] reserved; bit INTS; bit INTE;} RGPIO_CTRL_t;
+	typedef struct packed {logic[31:0] bits;} word_t;
+	typedef struct packed {bit [29:0] reserved; bit INTS; bit INTE;} RGPIO_CTRL_t;
 
-    // gpio input register read only
-    class rgpio_ro extends uvm_register #(word_t);
-        function new(string l_name = "registername", uvm_named_object p = null);
-            super.new(l_name, p);
-            resetValue = 32'h0;
-            register_type = "R0";
-            data = 32'h0;
-        endfunction
-    endclass
+	// gpio input register read only
+	class rgpio_ro extends uvm_register #(word_t);
+		function new(string l_name = "registername", uvm_named_object p = null);
+			super.new(l_name, p);
+			resetValue = 32'h0;
+			register_type = "R0";
+			data = 32'h0;
+		endfunction
+	endclass
 
-    // This is for most of the registers in the GPIO which are 32 bit r/w
-    class rgpio_rw extends uvm_register #(word_t);
+	// This is for most of the registers in the GPIO which are 32 bit r/w
+	class rgpio_rw extends uvm_register #(word_t);
 
-    function new(string l_name = "registerName",
-                 uvm_named_object p = null);
-      super.new(l_name, p);
-      resetValue = 32'h0;
-      register_type = "RW";
-      data = 32'h0;
-    endfunction
-    
-    endclass: rgpio_rw
-    
-    // This is for the control register
-    class rgpio_ctrl extends uvm_register #(RGPIO_CTRL_t);
-    
-    function new(string l_name = "registerName",
-                 uvm_named_object p = null);
-      super.new(l_name, p);
-      resetValue = 32'h0;
-      register_type = "RW";
-      data = 32'h0;
-    endfunction
-    
-    endclass: rgpio_ctrl
+		function new(string l_name = "registerName",
+				uvm_named_object p = null);
+			super.new(l_name, p);
+			resetValue = 32'h0;
+			register_type = "RW";
+			data = 32'h0;
+		endfunction
 
-    typedef uvm_register_base regs_array[];
+	endclass: rgpio_rw
 
-class gpio_register_file extends uvm_register_file;
+	// This is for the control register
+	class rgpio_ctrl extends uvm_register #(RGPIO_CTRL_t);
 
-rand rgpio_ro gpio_in_reg;
-rand rgpio_rw gpio_out_reg;
-rand rgpio_rw gpio_oe_reg;
-rand rgpio_rw gpio_inte_reg;
-rand rgpio_rw gpio_ptrig_reg;
-rand rgpio_rw gpio_aux_reg;
-rand rgpio_ctrl gpio_ctrl_reg;
-rand rgpio_rw gpio_ints_reg;
-rand rgpio_rw gpio_eclk_reg;
-rand rgpio_rw gpio_nec_reg;
+		function new(string l_name = "registerName",
+				uvm_named_object p = null);
+			super.new(l_name, p);
+			resetValue = 32'h0;
+			register_type = "RW";
+			data = 32'h0;
+		endfunction
 
-    function new(string name = "gpio_register_file",
-                uvm_named_object register_container = null );
+	endclass: rgpio_ctrl
 
-    super.new(name, register_container);
+	typedef uvm_register_base regs_array[];
 
-    gpio_in_reg = new("gpio_in", this);
-    gpio_in_reg.WMASK = 32'b00000000000000000000000000000000;
-    gpio_out_reg = new("gpio_out", this);
-    gpio_oe_reg = new("gpio_oe", this);
-    gpio_inte_reg = new("gpio_inte", this);
-    gpio_ptrig_reg = new("gpio_ptrig", this);
-    gpio_aux_reg = new("gpio_aux", this);
-    gpio_ctrl_reg = new("gpio_ctrl", this);
-    gpio_ints_reg = new("gpio_ints", this);
-    gpio_eclk_reg = new("gpio_eclk", this);
-    gpio_nec_reg = new("gpio_nec", this);
+	class gpio_register_file extends uvm_register_file;
 
-    this.add_register(gpio_in_reg.get_fullname(), 32'h0000_0000, gpio_in_reg, "GPI");
-    this.add_register(gpio_out_reg.get_fullname(), 32'h0000_0004, gpio_out_reg, "GPO");
-    this.add_register(gpio_oe_reg.get_fullname(), 32'h0000_0008, gpio_oe_reg, "GPOE");
-    this.add_register(gpio_inte_reg.get_fullname(), 32'h0000_000c, gpio_inte_reg, "INTE");
-    this.add_register(gpio_ptrig_reg.get_fullname(), 32'h0000_0010, gpio_ptrig_reg, "PTRIG");
-    this.add_register(gpio_aux_reg.get_fullname(), 32'h0000_0014, gpio_aux_reg, "AUX");
-    this.add_register(gpio_ctrl_reg.get_fullname(), 32'h0000_0018, gpio_ctrl_reg, "CTRL");
-    this.add_register(gpio_ints_reg.get_fullname(), 32'h0000_001c, gpio_ints_reg, "INTS");
-    this.add_register(gpio_eclk_reg.get_fullname(), 32'h0000_0020, gpio_eclk_reg, "ECLK");
-    this.add_register(gpio_nec_reg.get_fullname(), 32'h0000_0024, gpio_nec_reg, "NEC");
-endfunction
+		rand rgpio_ro gpio_in_reg;
+		rand rgpio_rw gpio_out_reg;
+		rand rgpio_rw gpio_oe_reg;
+		rand rgpio_rw gpio_inte_reg;
+		rand rgpio_rw gpio_ptrig_reg;
+		rand rgpio_rw gpio_aux_reg;
+		rand rgpio_ctrl gpio_ctrl_reg;
+		rand rgpio_rw gpio_ints_reg;
+		rand rgpio_rw gpio_eclk_reg;
+		rand rgpio_rw gpio_nec_reg;
 
-    function bit check_valid_address(address_t address);
-        bit result;
+		function new(string name = "gpio_register_file",
+				uvm_named_object register_container = null );
 
-        result = addrSpace.exists(address);
-        return result;
-    endfunction: check_valid_address
+			super.new(name, register_container);
 
-    function regs_array get_regs();
-        return '{gpio_in_reg,
-                gpio_out_reg,
-                gpio_oe_reg,
-                gpio_inte_reg,
-                gpio_ptrig_reg,
-                gpio_aux_reg,
-                gpio_ctrl_reg,
-                gpio_ints_reg,
-                gpio_eclk_reg,
-                gpio_nec_reg};
-    endfunction: get_regs
+			gpio_in_reg = new("gpio_in", this);
+			gpio_in_reg.WMASK = 32'b00000000000000000000000000000000;
+			gpio_out_reg = new("gpio_out", this);
+			gpio_oe_reg = new("gpio_oe", this);
+			gpio_inte_reg = new("gpio_inte", this);
+			gpio_ptrig_reg = new("gpio_ptrig", this);
+			gpio_aux_reg = new("gpio_aux", this);
+			gpio_ctrl_reg = new("gpio_ctrl", this);
+			gpio_ints_reg = new("gpio_ints", this);
+			gpio_eclk_reg = new("gpio_eclk", this);
+			gpio_nec_reg = new("gpio_nec", this);
 
-    endclass: gpio_register_file
+			this.add_register(gpio_in_reg.get_fullname(), 32'h0000_0000, gpio_in_reg, "GPI");
+			this.add_register(gpio_out_reg.get_fullname(), 32'h0000_0004, gpio_out_reg, "GPO");
+			this.add_register(gpio_oe_reg.get_fullname(), 32'h0000_0008, gpio_oe_reg, "GPOE");
+			this.add_register(gpio_inte_reg.get_fullname(), 32'h0000_000c, gpio_inte_reg, "INTE");
+			this.add_register(gpio_ptrig_reg.get_fullname(), 32'h0000_0010, gpio_ptrig_reg, "PTRIG");
+			this.add_register(gpio_aux_reg.get_fullname(), 32'h0000_0014, gpio_aux_reg, "AUX");
+			this.add_register(gpio_ctrl_reg.get_fullname(), 32'h0000_0018, gpio_ctrl_reg, "CTRL");
+			this.add_register(gpio_ints_reg.get_fullname(), 32'h0000_001c, gpio_ints_reg, "INTS");
+			this.add_register(gpio_eclk_reg.get_fullname(), 32'h0000_0020, gpio_eclk_reg, "ECLK");
+			this.add_register(gpio_nec_reg.get_fullname(), 32'h0000_0024, gpio_nec_reg, "NEC");
+		endfunction
 
-    typedef uvm_register_file reg_file_array[];
+		function bit check_valid_address(address_t address);
+			bit result;
 
-    class gpio_register_map extends uvm_register_map;
+			result = addrSpace.exists(address);
+			return result;
+		endfunction: check_valid_address
 
-    gpio_register_file gpio_reg_file;
+		function regs_array get_regs();
+			return '{gpio_in_reg,
+				gpio_out_reg,
+				gpio_oe_reg,
+				gpio_inte_reg,
+				gpio_ptrig_reg,
+				gpio_aux_reg,
+				gpio_ctrl_reg,
+				gpio_ints_reg,
+				gpio_eclk_reg,
+				gpio_nec_reg};
+		endfunction: get_regs
 
-    function new(string name, uvm_named_object parent);
-        super.new(name, parent);
-        gpio_reg_file = new("gpio_reg_file", this);
-        this.add_register_file(gpio_reg_file, 0);
-    endfunction
+	endclass: gpio_register_file
 
-    function reg_file_array get_register_files;
-        return '{gpio_reg_file};
-    endfunction: get_register_files;
+	typedef uvm_register_file reg_file_array[];
 
-endclass: gpio_register_map
+	class gpio_register_map extends uvm_register_map;
+
+		gpio_register_file gpio_reg_file;
+
+		function new(string name, uvm_named_object parent);
+			super.new(name, parent);
+			gpio_reg_file = new("gpio_reg_file", this);
+			this.add_register_file(gpio_reg_file, 0);
+		endfunction
+
+		function reg_file_array get_register_files;
+			return '{gpio_reg_file};
+		endfunction: get_register_files;
+
+	endclass: gpio_register_map
 
 `include "gpio_register_coverage.svh"
 

@@ -1,4 +1,4 @@
-package gpio_virtual_sequence_pkg;
+package gpio_virtual_sequence_lib_pkg;
     import uvm_pkg::*;
     `include "uvm_macros.svh"
     
@@ -19,7 +19,7 @@ package gpio_virtual_sequence_pkg;
         endfunction
 
         task body;
-
+			apb_seq_item cmd = apb_seq_item::type_id::create("cmd");
             // 占有总线
             m_sequencer.grab(this); // Exclusive access
             cmd.addr = `INTS;
@@ -140,6 +140,7 @@ package gpio_virtual_sequence_pkg;
     super.body();
     
     fork
+	    // gpio input to send stimulation
         gpi_inputs.start(gpi); // Forever
         begin // Setting up the GPI associated registers
         gpi_input_regs.iterations = 20000; // Repeat 100 times (Not enough)

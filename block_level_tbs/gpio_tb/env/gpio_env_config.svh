@@ -1,4 +1,4 @@
-class gpio_env_config extends uvm_obejct;
+class gpio_env_config extends uvm_object;
     localparam string s_my_config_id = "gpio_env_config";
     localparam string s_no_config_id = "no config";
     localparam string s_my_config_type_error_id = "config type error";

@@ -1,0 +1,6 @@
+# Automatically identify and compile all the source files in the project directory.
+# DO NOT explicitly list files/directories in 'dvt_auto_init' sections. Use 'dvt_init' sections instead.
++dvt_init_auto
++incdir+../../uvm_register-2.0/src/
+
+../../uvm_register-2.0/src/uvm_register_pkg.sv

@@ -1,4 +1,4 @@
-class gpio_virtual_sequencer extends uvm_sequencer #(uvm_sequence_item)
+class gpio_virtual_sequencer extends uvm_sequencer #(uvm_sequence_item);
     `uvm_component_utils(gpio_virtual_sequencer)
 
     gpio_sequencer gpi;

@@ -30,6 +30,7 @@ function void gpio_test_base::build_phase(uvm_phase phase);
     if (!uvm_config_db #(virtual apb_if)::get(this, "", "APB_vif", m_apb_cfg.APB))
     `uvm_fatal("VIF CONFIG", "Cannot get() interface APB_vif from uvm_config_db. Have you set() it?")
     configure_apb_agent(m_apb_cfg);
+    m_env_cfg.m_apb_agent_cfg = m_apb_cfg;
 
     m_GPO_cfg = gpio_agent_config::type_id::create("m_GPO_cfg", this);
     if (!uvm_config_db #(virtual gpio_if)::get(this, "", "GPO_vif", m_GPO_cfg.GPIO))
@@ -67,16 +68,16 @@ function gpio_test_base::new(string name = "gpio_test_base", uvm_component paren
     super.new(name, parent);
 endfunction
 
-virtual task gpio_test_base::run_phase(uvm_phase phase);
+task gpio_test_base::run_phase(uvm_phase phase);
 
 endtask: run_phase
 
-function gpio_test_base::configure_apb_agent(apb_agent_config cfg);
+function void gpio_test_base::configure_apb_agent(apb_agent_config cfg);
     cfg.active = UVM_ACTIVE;
     cfg.has_functional_coverage = 0;
     cfg.has_scoreboard = 0;
 
-    cfg.no_select_line = 1;
+    cfg.no_select_lines = 1;
     cfg.start_address[0] = 32'h0;
     cfg.range[0] = 32'h24;
 endfunction

@@ -2,7 +2,7 @@ UVM_REGISTER ?= ../../../../uvm_register-2.0
 RTL          ?= ../../../rtl
 AGENTS       ?= ../../../agents
 TAR_PATH     ?= ../..
-TEST         ?= gpio_outputs_test
+TEST         ?= gpio_input_test
 
 all: work build run
 
@@ -12,7 +12,7 @@ work:
 	vlib work
 
 build: work
-	vlog -incr +incdir+$(RTL)/gpio/rtl/verilog $(RTL)/gpio/rtl/verilog/*.v
+	vlog +acc -incr +incdir+$(RTL)/gpio/rtl/verilog $(RTL)/gpio/rtl/verilog/*.v
 	vlog -incr +incdir+$(UVM_REGISTER)/src $(UVM_REGISTER)/src/uvm_register_pkg.sv -suppress 2263
 	vlog -incr +incdir+$(AGENTS)/register_layering $(AGENTS)/register_layering/register_layering_pkg.sv -suppress 2263
 	vlog -incr +incdir+$(AGENTS)/apb_agent $(AGENTS)/apb_agent/apb_agent_pkg.sv -suppress 2263
@@ -29,8 +29,10 @@ build: work
 	vlog -incr -timescale 1ns/10ps +incdir+$(RTL)/gpio/rtl/verilog ../tb/top_tb.sv -suppress 2263
 
 run:
-	vsim -c -do "run -all" top_tb +UVM_TESTNAME="$(TEST)"
+	vsim -voptargs=+acc -c -do "run -all" top_tb +UVM_TESTNAME="$(TEST)"
 
+rung:
+	vsim -voptargs=+acc -gui -do "run -all" top_tb +UVM_TESTNAME="$(TEST)"
 clean:
 	@rm -rf work transcript *~ vsim.wlf *.log
 	@find ../../../ -name "*~" -delete

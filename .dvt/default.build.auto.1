@@ -1,0 +1,74 @@
+################################################################################
+#                    DO NOT MANUALLY EDIT THIS FILE!                           #
+################################################################################
+# This file contains the automatically generated build configuration (2022/07/05 20:19:31)
+# requested at line 3 in /home/e611hx/code/verifi/pss_rebuild/pss_verification/.dvt/default.build
+
+
+################ Verilog Auto-config Directives ################
++dvt_init
+
++incdir+../uvm_register-2.0/src/
+
+-uvm
++incdir+agents/ahb_agent
++incdir+agents/apb_agent
++incdir+agents/gpio_agent
++incdir+agents/register_layering
++incdir+agents/uart_agent
++incdir+block_level_tbs/gpio_tb/env
++incdir+block_level_tbs/gpio_tb/register_model
++incdir+block_level_tbs/gpio_tb/test
++incdir+rtl/gpio/rtl/verilog
+
+# Available `ifdef / `ifndef controls:
+# +define+GPIO_AUX_IMPLEMENT
+# +define+GPIO_CLKPAD
+# +define+GPIO_FULL_DECODE
+# +define+GPIO_IMPLEMENTED
+# +define+GPIO_NO_CLKPAD_LOGIC
+# +define+GPIO_NO_NEGEDGE_FLOPS
+# +define+GPIO_READREGS
+# +define+GPIO_REGISTERED_IO_OUTPUTS
+# +define+GPIO_REGISTERED_WB_OUTPUTS
+# +define+GPIO_RGPIO_AUX
+# +define+GPIO_RGPIO_CTRL
+# +define+GPIO_RGPIO_ECLK
+# +define+GPIO_RGPIO_IN
+# +define+GPIO_RGPIO_INTE
+# +define+GPIO_RGPIO_INTS
+# +define+GPIO_RGPIO_NEC
+# +define+GPIO_RGPIO_OE
+# +define+GPIO_RGPIO_OUT
+# +define+GPIO_RGPIO_PTRIG
+# +define+GPIO_STRICT_32BIT_ACCESS
+# +define+GPIO_SYNC_CLK_WB
+# +define+GPIO_SYNC_IN_CLK
+# +define+GPIO_SYNC_IN_CLK_WB
+# +define+GPIO_SYNC_IN_WB
+# +define+GPIO_WB_BYTES1
+# +define+GPIO_WB_BYTES2
+# +define+GPIO_WB_BYTES3
+# +define+GPIO_WB_BYTES4
+
+../uvm_register-2.0/src/uvm_register_pkg.sv
+./block_level_tbs/gpio_tb/register_model/*_pkg.sv
+./block_level_tbs/gpio_tb/register_model/*_pkg.sv
+agents/uart_agent/uart_agent_pkg.sv
+agents/register_layering/register_layering_pkg.sv
+agents/apb_agent/apb_agent_pkg.sv
+agents/gpio_agent/gpio_agent_pkg.sv
+block_level_tbs/gpio_tb/sequences/gpio_sequence_lib_pkg.sv
+block_level_tbs/gpio_tb/env/gpio_env_pkg.sv
+block_level_tbs/gpio_tb/sequences/gpio_bus_sequence_lib_pkg.sv
+block_level_tbs/gpio_tb/sequences/gpio_virtual_sequence_lib_pkg.sv
+block_level_tbs/gpio_tb/test/gpio_test_lib_pkg.sv
+agents/ahb_agent/ahb_agent_pkg.sv
+block_level_tbs/gpio_tb/tb/top_tb.sv
+rtl/gpio/rtl/verilog/gpio_top.v
+agents/ahb_agent/ahb_if.sv
+agents/apb_agent/apb_if.sv
+agents/gpio_agent/gpio_if.sv
+agents/uart_agent/serial_if.sv
+block_level_tbs/gpio_tb/tb/intr_if.sv
+

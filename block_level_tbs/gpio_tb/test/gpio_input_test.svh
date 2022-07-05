@@ -21,6 +21,6 @@ task gpio_input_test::run_phase(uvm_phase phase);
 
     test_seq.start(m_env.m_v_sqr);
 
-    #100ns;
+    #10000ns;
     phase.drop_objection(this, "gpio_input_test");
 endtask: run_phase
