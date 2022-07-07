@@ -8,11 +8,11 @@
 // File            : gpio_register_model_pkg.sv
 //----------------------------------------------------------------------
 // Created by      : e611hx
-// Creation Date   : 7/5/22 9:08 PM
+// Creation Date   : 7/7/22 11:25 AM
 //----------------------------------------------------------------------
 // Title           : RUVM_2021.2
 //
-// Description     : 
+// Description     :
 //
 //----------------------------------------------------------------------
 
@@ -21,605 +21,407 @@
 //----------------------------------------------------------------------
 package gpio_register_model_pkg;
 
-   import uvm_pkg::*;
+	import uvm_pkg::*;
 
    `include "uvm_macros.svh"
 
-   /* DEFINE REGISTER CLASSES */
+	/* DEFINE REGISTER CLASSES */
 
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_AUX_reg
-   // 
-   //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Class: RGPIO_AUX_reg
+	//
+	//--------------------------------------------------------------------
 
-   class RGPIO_AUX_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_AUX_reg)
+	class RGPIO_AUX_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_AUX_reg)
 
-      rand uvm_reg_field gpio_aux_output; 
+		rand uvm_reg_field gpio_aux_output;
 
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_aux_output	 : coverpoint gpio_aux_output.value[31:0];
-      endgroup
+		// Function: new
+		//
+		function new(string name = "RGPIO_AUX_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
 
+		// Function: build
+		//
+		virtual function void build();
+			gpio_aux_output = uvm_reg_field::type_id::create("gpio_aux_output");
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_AUX_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+			gpio_aux_output.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
+	//--------------------------------------------------------------------
+	// Class: RGPIO_CTRL_reg
+	//
+	//--------------------------------------------------------------------
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_aux_output = uvm_reg_field::type_id::create("gpio_aux_output");
+	class RGPIO_CTRL_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_CTRL_reg)
 
-         gpio_aux_output.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+		uvm_reg_field reserved;
+		rand uvm_reg_field gpio_ctrl_ints;
+		rand uvm_reg_field gpio_ctrl_inte;
 
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_CTRL_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_CTRL_reg
-   // 
-   //--------------------------------------------------------------------
 
-   class RGPIO_CTRL_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_CTRL_reg)
+		// Function: build
+		//
+		virtual function void build();
+			reserved = uvm_reg_field::type_id::create("reserved");
+			gpio_ctrl_ints = uvm_reg_field::type_id::create("gpio_ctrl_ints");
+			gpio_ctrl_inte = uvm_reg_field::type_id::create("gpio_ctrl_inte");
 
-      uvm_reg_field reserved; 
-      rand uvm_reg_field gpio_ctrl_ints; 
-      rand uvm_reg_field gpio_ctrl_inte; 
+			reserved.configure(this, 30, 2, "RW", 0, 30'b000000000000000000000000000000, 1, 0, 0);
+			gpio_ctrl_ints.configure(this, 1, 1, "RW", 0, 1'b0, 1, 1, 0);
+			gpio_ctrl_inte.configure(this, 1, 0, "RW", 0, 1'b0, 1, 1, 0);
 
+//			reserved.configure(this, 24, 8, "RO", 0, 24'h0, 1, 0, 0);
+//			fifo_avail.configure(this, 8, 0, "RO", 0, 8'h20, 1, 1, 0);
+		endfunction
+	endclass
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_ctrl_ints	 : coverpoint gpio_ctrl_ints.value[0];
-         gpio_ctrl_inte	 : coverpoint gpio_ctrl_inte.value[0];
-      endgroup
 
 
+	//--------------------------------------------------------------------
+	// Class: RGPIO_ECLK_reg
+	//
+	//--------------------------------------------------------------------
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_CTRL_reg");
-         super.new(name, 2, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+	class RGPIO_ECLK_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_ECLK_reg)
 
+		rand uvm_reg_field gpio_eclk;
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_ECLK_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-      // Function: build
-      // 
-      virtual function void build();
-         reserved = uvm_reg_field::type_id::create("reserved");
-         gpio_ctrl_ints = uvm_reg_field::type_id::create("gpio_ctrl_ints");
-         gpio_ctrl_inte = uvm_reg_field::type_id::create("gpio_ctrl_inte");
 
-         reserved.configure(this, 30, 2, "RW", 0, 30'b000000000000000000000000000000, 1, 0, 0);
-         gpio_ctrl_ints.configure(this, 1, 1, "RW", 0, 1'b0, 1, 1, 0);
-         gpio_ctrl_inte.configure(this, 1, 0, "RW", 0, 1'b0, 1, 1, 0);
-      endfunction
-   endclass
+		// Function: build
+		//
+		virtual function void build();
+			gpio_eclk = uvm_reg_field::type_id::create("gpio_eclk");
 
+			gpio_eclk.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_ECLK_reg
-   // 
-   //--------------------------------------------------------------------
 
-   class RGPIO_ECLK_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_ECLK_reg)
+	//--------------------------------------------------------------------
+	// Class: RGPIO_INTE_reg
+	//
+	//--------------------------------------------------------------------
 
-      rand uvm_reg_field gpio_eclk; 
+	class RGPIO_INTE_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_INTE_reg)
 
+		rand uvm_reg_field gpio_interrupt;
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_eclk	 : coverpoint gpio_eclk.value[31:0];
-      endgroup
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_INTE_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_ECLK_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+		// Function: build
+		//
+		virtual function void build();
+			gpio_interrupt = uvm_reg_field::type_id::create("gpio_interrupt");
 
+			gpio_interrupt.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_eclk = uvm_reg_field::type_id::create("gpio_eclk");
+	//--------------------------------------------------------------------
+	// Class: RGPIO_INTS_reg
+	//
+	//--------------------------------------------------------------------
 
-         gpio_eclk.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+	class RGPIO_INTS_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_INTS_reg)
 
+		rand uvm_reg_field gpio_ints;
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_INTE_reg
-   // 
-   //--------------------------------------------------------------------
+		// Function: new
+		//
+		function new(string name = "RGPIO_INTS_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-   class RGPIO_INTE_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_INTE_reg)
 
-      rand uvm_reg_field gpio_interrupt; 
+		// Function: build
+		//
+		virtual function void build();
+			gpio_ints = uvm_reg_field::type_id::create("gpio_ints");
 
+			gpio_ints.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_interrupt	 : coverpoint gpio_interrupt.value[31:0];
-      endgroup
 
 
+	//--------------------------------------------------------------------
+	// Class: RGPIO_IN_reg
+	//
+	//--------------------------------------------------------------------
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_INTE_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+	class RGPIO_IN_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_IN_reg)
 
+		uvm_reg_field gpio_input;
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_IN_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_interrupt = uvm_reg_field::type_id::create("gpio_interrupt");
 
-         gpio_interrupt.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+		// Function: build
+		//
+		virtual function void build();
+			gpio_input = uvm_reg_field::type_id::create("gpio_input");
 
+			gpio_input.configure(this, 32, 0, "RO", 0, 32'h00000000, 1, 0, 1);
+		endfunction
+	endclass
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_INTS_reg
-   // 
-   //--------------------------------------------------------------------
 
-   class RGPIO_INTS_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_INTS_reg)
+	//--------------------------------------------------------------------
+	// Class: RGPIO_NEC_reg
+	//
+	//--------------------------------------------------------------------
 
-      rand uvm_reg_field gpio_ints; 
+	class RGPIO_NEC_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_NEC_reg)
 
+		rand uvm_reg_field gpio_nec;
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_ints	 : coverpoint gpio_ints.value[31:0];
-      endgroup
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_NEC_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_INTS_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+		// Function: build
+		//
+		virtual function void build();
+			gpio_nec = uvm_reg_field::type_id::create("gpio_nec");
 
+			gpio_nec.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_ints = uvm_reg_field::type_id::create("gpio_ints");
+	//--------------------------------------------------------------------
+	// Class: RGPIO_OE_reg
+	//
+	//--------------------------------------------------------------------
 
-         gpio_ints.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+	class RGPIO_OE_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_OE_reg)
 
+		rand uvm_reg_field gpio_out_enable;
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_IN_reg
-   // 
-   //--------------------------------------------------------------------
+		// Function: new
+		//
+		function new(string name = "RGPIO_OE_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-   class RGPIO_IN_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_IN_reg)
 
-      uvm_reg_field gpio_input; 
+		// Function: build
+		//
+		virtual function void build();
+			gpio_out_enable = uvm_reg_field::type_id::create("gpio_out_enable");
 
+			gpio_out_enable.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_input	 : coverpoint gpio_input.value[31:0];
-      endgroup
 
 
+	//--------------------------------------------------------------------
+	// Class: RGPIO_OUT_reg
+	//
+	//--------------------------------------------------------------------
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_IN_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+	class RGPIO_OUT_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_OUT_reg)
 
+		rand uvm_reg_field gpio_output;
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_OUT_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_input = uvm_reg_field::type_id::create("gpio_input");
 
-         gpio_input.configure(this, 32, 0, "RO", 0, 32'h00000000, 1, 0, 1);
-      endfunction
-   endclass
+		// Function: build
+		//
+		virtual function void build();
+			gpio_output = uvm_reg_field::type_id::create("gpio_output");
 
+			gpio_output.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_NEC_reg
-   // 
-   //--------------------------------------------------------------------
 
-   class RGPIO_NEC_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_NEC_reg)
+	//--------------------------------------------------------------------
+	// Class: RGPIO_PTRIG_reg
+	//
+	//--------------------------------------------------------------------
 
-      rand uvm_reg_field gpio_nec; 
+	class RGPIO_PTRIG_reg extends uvm_reg;
+		`uvm_object_utils(RGPIO_PTRIG_reg)
 
+		rand uvm_reg_field gpio_edge_interrupt;
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_nec	 : coverpoint gpio_nec.value[31:0];
-      endgroup
 
+		// Function: new
+		//
+		function new(string name = "RGPIO_PTRIG_reg");
+			super.new(name, 32, UVM_NO_COVERAGE);
+		endfunction
 
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_NEC_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+		// Function: build
+		//
+		virtual function void build();
+			gpio_edge_interrupt = uvm_reg_field::type_id::create("gpio_edge_interrupt");
 
+			gpio_edge_interrupt.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
+		endfunction
+	endclass
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
 
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_nec = uvm_reg_field::type_id::create("gpio_nec");
 
-         gpio_nec.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+	/* BLOCKS */
 
 
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_OE_reg
-   // 
-   //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Class: gpio_reg_block
+	//
+	//--------------------------------------------------------------------
 
-   class RGPIO_OE_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_OE_reg)
+	class gpio_reg_block extends uvm_reg_block;
+		`uvm_object_utils(gpio_reg_block)
 
-      rand uvm_reg_field gpio_out_enable; 
+		rand RGPIO_IN_reg RGPIO_IN;
+		rand RGPIO_OUT_reg RGPIO_OUT;
+		rand RGPIO_OE_reg RGPIO_OE;
+		rand RGPIO_INTE_reg RGPIO_INTE;
+		rand RGPIO_PTRIG_reg RGPIO_PTRIG;
+		rand RGPIO_AUX_reg RGPIO_AUX;
+		rand RGPIO_CTRL_reg RGPIO_CTRL;
+		rand RGPIO_INTS_reg RGPIO_INTS;
+		rand RGPIO_ECLK_reg RGPIO_ECLK;
+		rand RGPIO_NEC_reg RGPIO_NEC;
 
+		uvm_reg_map gpio_reg_block_map;
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_out_enable	 : coverpoint gpio_out_enable.value[31:0];
-      endgroup
 
+		// Function: new
+		//
+		function new(string name = "gpio_reg_block");
+			super.new(name, UVM_NO_COVERAGE);
+		endfunction
 
 
-      // Function: new
-      // 
-      function new(string name = "RGPIO_OE_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
+		// Function: build
+		//
+		virtual function void build();
+			RGPIO_IN = RGPIO_IN_reg::type_id::create("RGPIO_IN");
+			RGPIO_IN.configure(this);
+			RGPIO_IN.build();
 
+			RGPIO_OUT = RGPIO_OUT_reg::type_id::create("RGPIO_OUT");
+			RGPIO_OUT.configure(this);
+			RGPIO_OUT.build();
 
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
+			RGPIO_OE = RGPIO_OE_reg::type_id::create("RGPIO_OE");
+			RGPIO_OE.configure(this);
+			RGPIO_OE.build();
 
+			RGPIO_INTE = RGPIO_INTE_reg::type_id::create("RGPIO_INTE");
+			RGPIO_INTE.configure(this);
+			RGPIO_INTE.build();
 
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_out_enable = uvm_reg_field::type_id::create("gpio_out_enable");
+			RGPIO_PTRIG = RGPIO_PTRIG_reg::type_id::create("RGPIO_PTRIG");
+			RGPIO_PTRIG.configure(this);
+			RGPIO_PTRIG.build();
 
-         gpio_out_enable.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
+			RGPIO_AUX = RGPIO_AUX_reg::type_id::create("RGPIO_AUX");
+			RGPIO_AUX.configure(this);
+			RGPIO_AUX.build();
 
+			RGPIO_CTRL = RGPIO_CTRL_reg::type_id::create("RGPIO_CTRL");
+			RGPIO_CTRL.configure(this);
+			RGPIO_CTRL.build();
 
+			RGPIO_INTS = RGPIO_INTS_reg::type_id::create("RGPIO_INTS");
+			RGPIO_INTS.configure(this);
+			RGPIO_INTS.build();
 
-   //--------------------------------------------------------------------
-   // Class: RGPIO_OUT_reg
-   // 
-   //--------------------------------------------------------------------
+			RGPIO_ECLK = RGPIO_ECLK_reg::type_id::create("RGPIO_ECLK");
+			RGPIO_ECLK.configure(this);
+			RGPIO_ECLK.build();
 
-   class RGPIO_OUT_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_OUT_reg)
+			RGPIO_NEC = RGPIO_NEC_reg::type_id::create("RGPIO_NEC");
+			RGPIO_NEC.configure(this);
+			RGPIO_NEC.build();
 
-      rand uvm_reg_field gpio_output; 
+			gpio_reg_block_map = create_map("gpio_reg_block_map", 'h0, 4, UVM_LITTLE_ENDIAN, 1);
+			default_map = gpio_reg_block_map;
 
+			gpio_reg_block_map.add_reg(RGPIO_IN, 'h0, "RO");
+			gpio_reg_block_map.add_reg(RGPIO_OUT, 'h4, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_OE, 'h8, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_INTE, 'hc, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_PTRIG, 'h10, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_AUX, 'h14, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_CTRL, 'h18, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_INTS, 'h1c, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_ECLK, 'h20, "RW");
+			gpio_reg_block_map.add_reg(RGPIO_NEC, 'h24, "RW");
 
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_output	 : coverpoint gpio_output.value[31:0];
-      endgroup
-
-
-
-      // Function: new
-      // 
-      function new(string name = "RGPIO_OUT_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
-
-
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
-
-
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_output = uvm_reg_field::type_id::create("gpio_output");
-
-         gpio_output.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
-
-
-
-   //--------------------------------------------------------------------
-   // Class: RGPIO_PTRIG_reg
-   // 
-   //--------------------------------------------------------------------
-
-   class RGPIO_PTRIG_reg extends uvm_reg;
-      `uvm_object_utils(RGPIO_PTRIG_reg)
-
-      rand uvm_reg_field gpio_edge_interrupt; 
-
-
-      // Function: coverage
-      // 
-      covergroup cg_vals;
-         gpio_edge_interrupt	 : coverpoint gpio_edge_interrupt.value[31:0];
-      endgroup
-
-
-
-      // Function: new
-      // 
-      function new(string name = "RGPIO_PTRIG_reg");
-         super.new(name, 32, build_coverage(UVM_CVR_FIELD_VALS));
-         add_coverage(build_coverage(UVM_CVR_FIELD_VALS));
-         if(has_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals = new();
-      endfunction
-
-
-      // Function: sample_values
-      // 
-      virtual function void sample_values();
-         super.sample_values();
-         if (get_coverage(UVM_CVR_FIELD_VALS))
-            cg_vals.sample();
-      endfunction
-
-
-      // Function: build
-      // 
-      virtual function void build();
-         gpio_edge_interrupt = uvm_reg_field::type_id::create("gpio_edge_interrupt");
-
-         gpio_edge_interrupt.configure(this, 32, 0, "RW", 0, 32'h00000000, 1, 1, 1);
-      endfunction
-   endclass
-
-
-
-
-   /* BLOCKS */
-
-
-
-   //--------------------------------------------------------------------
-   // Class: gpio_reg_block
-   // 
-   //--------------------------------------------------------------------
-
-   class gpio_reg_block extends uvm_reg_block;
-      `uvm_object_utils(gpio_reg_block)
-
-      rand RGPIO_IN_reg RGPIO_IN; 
-      rand RGPIO_OUT_reg RGPIO_OUT; 
-      rand RGPIO_OE_reg RGPIO_OE; 
-      rand RGPIO_INTE_reg RGPIO_INTE; 
-      rand RGPIO_PTRIG_reg RGPIO_PTRIG; 
-      rand RGPIO_AUX_reg RGPIO_AUX; 
-      rand RGPIO_CTRL_reg RGPIO_CTRL; 
-      rand RGPIO_INTS_reg RGPIO_INTS; 
-      rand RGPIO_ECLK_reg RGPIO_ECLK; 
-      rand RGPIO_NEC_reg RGPIO_NEC; 
-
-      uvm_reg_map gpio_reg_block_map; 
-
-
-      // Function: new
-      // 
-      function new(string name = "gpio_reg_block");
-         super.new(name, build_coverage(UVM_CVR_ALL));
-      endfunction
-
-
-      // Function: build
-      // 
-      virtual function void build();
-         RGPIO_IN = RGPIO_IN_reg::type_id::create("RGPIO_IN");
-         RGPIO_IN.configure(this);
-         RGPIO_IN.build();
-
-         RGPIO_OUT = RGPIO_OUT_reg::type_id::create("RGPIO_OUT");
-         RGPIO_OUT.configure(this);
-         RGPIO_OUT.build();
-
-         RGPIO_OE = RGPIO_OE_reg::type_id::create("RGPIO_OE");
-         RGPIO_OE.configure(this);
-         RGPIO_OE.build();
-
-         RGPIO_INTE = RGPIO_INTE_reg::type_id::create("RGPIO_INTE");
-         RGPIO_INTE.configure(this);
-         RGPIO_INTE.build();
-
-         RGPIO_PTRIG = RGPIO_PTRIG_reg::type_id::create("RGPIO_PTRIG");
-         RGPIO_PTRIG.configure(this);
-         RGPIO_PTRIG.build();
-
-         RGPIO_AUX = RGPIO_AUX_reg::type_id::create("RGPIO_AUX");
-         RGPIO_AUX.configure(this);
-         RGPIO_AUX.build();
-
-         RGPIO_CTRL = RGPIO_CTRL_reg::type_id::create("RGPIO_CTRL");
-         RGPIO_CTRL.configure(this);
-         RGPIO_CTRL.build();
-
-         RGPIO_INTS = RGPIO_INTS_reg::type_id::create("RGPIO_INTS");
-         RGPIO_INTS.configure(this);
-         RGPIO_INTS.build();
-
-         RGPIO_ECLK = RGPIO_ECLK_reg::type_id::create("RGPIO_ECLK");
-         RGPIO_ECLK.configure(this);
-         RGPIO_ECLK.build();
-
-         RGPIO_NEC = RGPIO_NEC_reg::type_id::create("RGPIO_NEC");
-         RGPIO_NEC.configure(this);
-         RGPIO_NEC.build();
-
-         gpio_reg_block_map = create_map("gpio_reg_block_map", 'h0, 4, UVM_LITTLE_ENDIAN, 1);
-         default_map = gpio_reg_block_map;
-
-         gpio_reg_block_map.add_reg(RGPIO_IN, 'h0, "RO");
-         gpio_reg_block_map.add_reg(RGPIO_OUT, 'h4, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_OE, 'h8, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_INTE, 'hc, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_PTRIG, 'h10, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_AUX, 'h14, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_CTRL, 'h18, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_INTS, 'h1c, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_ECLK, 'h20, "RW");
-         gpio_reg_block_map.add_reg(RGPIO_NEC, 'h24, "RW");
-
-         lock_model();
-      endfunction
-   endclass
+			lock_model();
+		endfunction
+	endclass
 
 
 endpackage

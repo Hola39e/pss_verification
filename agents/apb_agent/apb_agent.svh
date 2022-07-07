@@ -42,6 +42,7 @@ function void apb_agent::connect_phase(uvm_phase phase);
 
 	// 链接port
 	ap = m_monitor.ap;
+    //m_driver.APB = m_cfg.APB;
 
 	if(m_cfg.active == UVM_ACTIVE)begin
 		// driver.seq_item_port to sequencer seq_item_export

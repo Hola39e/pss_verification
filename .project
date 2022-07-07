@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>pss_verification</name>
+	<name>pss_verification_old</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -66,11 +66,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/pss_verification</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/uvm_register-2.0</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -81,22 +76,12 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/pss_verification/block_level_tbs</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/uvm_register-2.0/src</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>DVT Auto-Linked/home/e611hx/dvt_env/dvt_eclipse/predefined_projects/libs/uvm-1.2</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/pss_verification/block_level_tbs/gpio_tb</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -216,11 +201,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/pss_verification/block_level_tbs/gpio_tb/register_model</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>DVT Auto-Linked/home/e611hx/dvt_env/dvt_eclipse/predefined_projects/libs/uvm-1.2/src/base</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -274,11 +254,6 @@
 			<name>DVT Auto-Linked/home/e611hx/dvt_env/dvt_eclipse/predefined_projects/libs/uvm-1.2/src/uvm_pkg.sv</name>
 			<type>1</type>
 			<locationURI>DVT_PATH/home/e611hx/dvt_env/dvt_eclipse/predefined_projects/libs/uvm-1.2/src/uvm_pkg.sv</locationURI>
-		</link>
-		<link>
-			<name>DVT Auto-Linked/home/e611hx/code/verifi/pss_rebuild/pss_verification/block_level_tbs/gpio_tb/register_model/gpio_register_model_pkg.sv</name>
-			<type>1</type>
-			<locationURI>DVT_PATH/home/e611hx/code/verifi/pss_rebuild/pss_verification/block_level_tbs/gpio_tb/register_model/gpio_register_model_pkg.sv</locationURI>
 		</link>
 		<link>
 			<name>DVT Auto-Linked/home/e611hx/dvt_env/dvt_eclipse/predefined_projects/libs/uvm-1.2/src/base/uvm_barrier.svh</name>

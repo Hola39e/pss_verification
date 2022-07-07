@@ -4,7 +4,7 @@ class apb2reg_adapter extends uvm_reg_adapter;
 
 	function new(string name = "apb2reg_adapter");
 		super.new(name);
-		provides_responses = 1;
+		//provides_responses = 1;
 	endfunction
 
 	function uvm_sequence_item reg2bus(const ref uvm_reg_bus_op rw);
@@ -18,8 +18,10 @@ class apb2reg_adapter extends uvm_reg_adapter;
 	function void bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
 		//USER TODO
 		apb_seq_item t;
-		if(!$cast(t, bus_item))
+		if(!$cast(t, bus_item))begin
 			`uvm_fatal("CAST FAILED", "IN the rgm bus2reg")
+			return;
+		end
 		rw.kind = (t.we == 1) ? UVM_WRITE : UVM_READ;
 		rw.addr = t.addr;
 		rw.data = t.data;

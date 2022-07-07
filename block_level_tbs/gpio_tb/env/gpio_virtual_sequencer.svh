@@ -4,6 +4,9 @@ class gpio_virtual_sequencer extends uvm_sequencer #(uvm_sequence_item);
     gpio_sequencer gpi;
     gpio_sequencer aux;
     apb_sequencer apb;
+	
+	
+	gpio_reg_block gpio_rgm;
 
     extern function new(string name = "gpio_virtual_sequencer", uvm_component parent = null);
 endclass

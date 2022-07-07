@@ -6,8 +6,8 @@ package gpio_env_pkg;
     // Any further package imports:
     import apb_agent_pkg::*;
     import gpio_agent_pkg::*;
-    import uvm_register_pkg::*;
-    import gpio_register_pkg::*;
+    //import uvm_register_pkg::*;
+    //import gpio_register_pkg::*;
 	import gpio_register_model_pkg::*;
 
     localparam string s_my_config_id = "gpio_env_config";

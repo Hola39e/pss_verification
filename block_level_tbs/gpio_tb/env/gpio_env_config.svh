@@ -26,7 +26,9 @@ class gpio_env_config extends uvm_object;
     // interrupt interface
     virtual intr_if INTR;
 
-    uvm_register_map gpio_rm;
+    //uvm_register_map gpio_rm;
+	
+	gpio_reg_block gpio_rgm;
 
     extern task wait_for_interrupt;
     extern static function gpio_env_config get_config( uvm_component c);

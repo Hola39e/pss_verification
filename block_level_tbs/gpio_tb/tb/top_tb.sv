@@ -4,7 +4,7 @@ module top_tb;
     `include "timescale.v"
 
     import uvm_pkg::*;
-    import gpio_test_lib_pkg::*;
+    import gpio_rgm_test_lib_pkg::*;
 
     logic PCLK;
     logic PRESETn;

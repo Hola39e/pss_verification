@@ -1,7 +1,7 @@
 ################################################################################
 #                    DO NOT MANUALLY EDIT THIS FILE!                           #
 ################################################################################
-# This file contains the automatically generated build configuration (2022/07/05 20:19:31)
+# This file contains the automatically generated build configuration (2022/07/06 21:25:32)
 # requested at line 3 in /home/e611hx/code/verifi/pss_rebuild/pss_verification/.dvt/default.build
 
 
@@ -17,6 +17,7 @@
 +incdir+agents/register_layering
 +incdir+agents/uart_agent
 +incdir+block_level_tbs/gpio_tb/env
++incdir+block_level_tbs/gpio_tb/gpio_rgm_test
 +incdir+block_level_tbs/gpio_tb/register_model
 +incdir+block_level_tbs/gpio_tb/test
 +incdir+rtl/gpio/rtl/verilog
@@ -57,13 +58,17 @@
 agents/uart_agent/uart_agent_pkg.sv
 agents/register_layering/register_layering_pkg.sv
 agents/apb_agent/apb_agent_pkg.sv
+agents/ahb_agent/ahb_agent_pkg.sv
 agents/gpio_agent/gpio_agent_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_sequence_lib_pkg.sv
 block_level_tbs/gpio_tb/env/gpio_env_pkg.sv
+block_level_tbs/gpio_tb/sequences/gpio_rgm_bus_seq_lib_pkg.sv
+block_level_tbs/gpio_tb/sequences/gpio_rgm_virtual_sequence_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_bus_sequence_lib_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_virtual_sequence_lib_pkg.sv
 block_level_tbs/gpio_tb/test/gpio_test_lib_pkg.sv
-agents/ahb_agent/ahb_agent_pkg.sv
+block_level_tbs/gpio_tb/gpio_rgm_test/gpio_rgm_test_lib_pkg.sv
+agents/apb_agent/apb_register_adapter.svh
 block_level_tbs/gpio_tb/tb/top_tb.sv
 rtl/gpio/rtl/verilog/gpio_top.v
 agents/ahb_agent/ahb_if.sv

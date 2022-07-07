@@ -6,12 +6,16 @@ class gpio_env extends uvm_env;
 	gpio_agent m_GPOE_agent;
 	gpio_agent m_GPI_agent;
 	gpio_agent m_AUX_agent;
-	gpio_register_coverage m_reg_cov_monitor;
+	// gpio_register_coverage m_reg_cov_monitor;
 	gpio_virtual_sequencer m_v_sqr;
 	gpio_reg_scoreboard m_reg_sb;
 	gpio_out_scoreboard m_out_sb;
 	gpio_in_scoreboard m_in_sb;
 	gpio_env_config m_cfg;
+
+	gpio_reg_block gpio_rgm;
+	apb2reg_adapter rgm_adapter;
+	uvm_reg_predictor #(apb_seq_item) predictor;
 
 	extern function new(string name = "gpio_env", uvm_component parent = null);
 	extern function void build_phase(uvm_phase phase);
@@ -25,6 +29,8 @@ function gpio_env::new(string name = "gpio_env", uvm_component parent = null);
 endfunction
 
 function void gpio_env::build_phase(uvm_phase phase);
+
+
 	if (!uvm_config_db #(gpio_env_config)::get(this, "", "gpio_env_config", m_cfg) )
 		`uvm_fatal("CONFIG_LOAD", "Cannot get() configuration gpio_env_config from uvm_config_db. Have you set() it?")
 	if(m_cfg.has_apb_agent) begin
@@ -51,9 +57,9 @@ function void gpio_env::build_phase(uvm_phase phase);
 	if(m_cfg.has_virtual_sequencer) begin
 		m_v_sqr = gpio_virtual_sequencer::type_id::create("m_v_sqr", this);
 	end
-	if(m_cfg.has_functional_coverage) begin
-		m_reg_cov_monitor = gpio_register_coverage::type_id::create("m_reg_cov_monitor", this);
-	end
+//	if(m_cfg.has_functional_coverage) begin
+//		m_reg_cov_monitor = gpio_register_coverage::type_id::create("m_reg_cov_monitor", this);
+//	end
 	if(m_cfg.has_reg_scoreboard) begin
 		m_reg_sb = gpio_reg_scoreboard::type_id::create("m_reg_sb", this);
 	end
@@ -63,9 +69,30 @@ function void gpio_env::build_phase(uvm_phase phase);
 	if(m_cfg.has_in_scoreboard) begin
 		m_in_sb = gpio_in_scoreboard::type_id::create("m_in_sb", this);
 	end
+
+	// config the reg model------------------------------------------------
+	gpio_rgm = m_cfg.gpio_rgm;
+	rgm_adapter = apb2reg_adapter::type_id::create("rgm_adapter");
+	predictor = uvm_reg_predictor#(apb_seq_item)::type_id::create("predictor", this);
+	// config the reg model------------------------------------------------
+
 endfunction:build_phase
 
 function void gpio_env::connect_phase(uvm_phase phase);
+
+	// rgm config -------------------------------------------------
+	m_cfg.gpio_rgm.gpio_reg_block_map.set_sequencer(m_apb_agent.m_sequencer, rgm_adapter);
+	m_apb_agent.m_monitor.ap.connect(predictor.bus_in);
+	predictor.map = m_cfg.gpio_rgm.gpio_reg_block_map;
+	predictor.adapter = rgm_adapter;
+
+	
+	m_cfg.gpio_rgm.gpio_reg_block_map.set_auto_predict(0);
+	m_apb_agent.ap.connect(predictor.bus_in);
+	m_v_sqr.gpio_rgm = m_cfg.gpio_rgm;
+	`uvm_info("RGM in env set", "now go to this", UVM_LOW);
+	// rgm config -------------------------------------------------
+	
 	if(m_cfg.has_virtual_sequencer) begin
 		if(m_cfg.has_apb_agent) begin
 			m_v_sqr.apb = m_apb_agent.m_sequencer;
@@ -77,9 +104,9 @@ function void gpio_env::connect_phase(uvm_phase phase);
 			m_v_sqr.gpi = m_GPI_agent.m_sequencer;
 		end
 	end
-	if(m_cfg.has_functional_coverage) begin
-		m_apb_agent.ap.connect(m_reg_cov_monitor.analysis_export);
-	end
+//	if(m_cfg.has_functional_coverage) begin
+//		m_apb_agent.ap.connect(m_reg_cov_monitor.analysis_export);
+//	end
 	if(m_cfg.has_reg_scoreboard) begin
 		m_apb_agent.ap.connect(m_reg_sb.analysis_export);
 	end
