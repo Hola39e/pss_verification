@@ -2,7 +2,7 @@ UVM_REGISTER ?= ../../../../uvm_register-2.0
 RTL          ?= ../../../rtl
 AGENTS       ?= ../../../agents
 TAR_PATH     ?= ../..
-TEST         ?= gpio_rgm_input_test
+TEST         ?= gpio_rgm_input_read_test
 
 all: work build run
 

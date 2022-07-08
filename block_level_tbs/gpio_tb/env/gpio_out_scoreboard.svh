@@ -396,14 +396,14 @@
         foreach(aux_reg[i]) begin
             if(aux_reg[i] == 1) begin // Expecting the aux input to be on GPO
             if(gpo.gpio[i] != aux_sample[i]) begin
-                `uvm_error("GPIO_OUTPUT_SB", $sformatf("AUX_Input to GPO error on bit %0d", i))
+                `uvm_error("GPIO_OUTPUT_SB", $sformatf("AUX_Input to GPO error on bit %0d expected on %0d which real is %0d", i, gpo_reg[i], aux_sample[i]))
                 aux_error_count++;
                 error = 1;
             end
             end
             else begin // Expected the GPO register value to be on GPO
             if(gpo.gpio[i] != gpo_reg[i]) begin
-                `uvm_error("GPIO_OUTPUT_SB", $sformatf("GPO error on bit %0d", i))
+                `uvm_error("GPIO_OUTPUT_SB", $sformatf("GPO error on bit %0d expected on %0d which real is %0d", i, gpo_reg[i], gpo.gpio[i]))
                 gpo_error_count++;
                 error = 1;
             end

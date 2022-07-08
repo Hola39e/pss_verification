@@ -103,7 +103,7 @@ package gpio_rgm_virtual_sequence_pkg;
 			//gpio_input_test_seq gpi_input_regs = gpio_input_test_seq::type_id::create("gpi_input_regs");
 			gpio_rand_seq gpi_inputs = gpio_rand_seq::type_id::create("gpio_rand_seq");
 			check_reset_seq gpi_reg_reset_check = check_reset_seq::type_id::create("gpi_reg_reset_check");
-        	gpio_rgm_input_test_seq gpi_input_regs = gpio_rgm_input_test_seq::type_id::create("gpi_input_regs");
+			gpio_rgm_input_test_seq gpi_input_regs = gpio_rgm_input_test_seq::type_id::create("gpi_input_regs");
 			gpio_isr ISR = gpio_isr::type_id::create("ISR");
 			super.body();
 			gpi_reg_reset_check.start(apb);
@@ -124,5 +124,63 @@ package gpio_rgm_virtual_sequence_pkg;
 
 		endtask: body
 
+	endclass
+
+	class GPI_reg_test_vseq extends gpio_rgm_virtual_sequence_base;
+
+		`uvm_object_utils(GPI_reg_test_vseq)
+		uvm_status_e status;
+		function new(string name = "GPI_reg_test_vseq");
+			super.new(name);
+		endfunction
+
+		task body;
+			//gpio_input_test_seq gpi_input_regs = gpio_input_test_seq::type_id::create("gpi_input_regs");
+			output_test_seq GP_OPs = output_test_seq::type_id::create("GP_OPs");
+			check_reset_seq gpi_reg_reset_check = check_reset_seq::type_id::create("gpi_reg_reset_check");
+//          gpio_aux_seq AUX_IPs = gpio_aux_seq::type_id::create("AUX_IPs");
+//          diag_outputs diag = diag_outputs::type_id::create("diag");
+//          aux_reg_seq AUX_reg = aux_reg_seq::type_id::create("AUX_reg");
+			super.body();
+			gpi_reg_reset_check.start(apb);
+			`uvm_info("SEQ","run reset check sequence over", UVM_LOW);
+			fork
+				GP_OPs.start(apb);
+			join_none
+
+		endtask: body
+	endclass
+
+	class GPI_rgm_output_vseq extends gpio_rgm_virtual_sequence_base;
+
+		`uvm_object_utils(GPI_rgm_output_vseq)
+		uvm_status_e status;
+		function new(string name = "GPI_rgm_output_vseq");
+			super.new(name);
+		endfunction
+
+		task body;
+			output_test_seq GP_OPs = output_test_seq::type_id::create("GP_OPs");
+			check_reset_seq gpi_reg_reset_check = check_reset_seq::type_id::create("gpi_reg_reset_check");
+			gpio_aux_seq AUX_IPs = gpio_aux_seq::type_id::create("AUX_IPs");
+			diag_outputs diag = diag_outputs::type_id::create("diag");
+			aux_reg_seq AUX_reg = aux_reg_seq::type_id::create("AUX_reg");
+			super.body();
+			gpi_reg_reset_check.start(apb);
+			fork
+				begin
+					// set GPIO and AUX reg
+					// diag.start(apb);
+					repeat(200) begin
+						fork
+							GP_OPs.start(apb);
+							AUX_reg.start(apb);
+						join
+					end
+				end
+				// send aux pkt
+				AUX_IPs.start(aux);
+			join_any
+		endtask: body
 	endclass
 endpackage 

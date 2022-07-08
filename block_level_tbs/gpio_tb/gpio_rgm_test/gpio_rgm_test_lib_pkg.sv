@@ -17,5 +17,6 @@ package gpio_rgm_test_lib_pkg;
     `include "gpio_rgm_test_base.sv"
     `include "gpio_rgm_input_test.sv"
     `include "gpio_rgm_input_read_test.sv"
+    `include "gpio_rgm_output_test.svh"
 endpackage: gpio_rgm_test_lib_pkg
     
