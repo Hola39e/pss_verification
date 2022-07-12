@@ -8,13 +8,13 @@ class pss_env_config extends uvm_object;
     //
     `uvm_object_utils(pss_env_config)
     bit has_spi_env = 1;
-bit has_gpio_env = 1;
-bit has_virtual_sequencer = 1;
-bit has_ahb_agent = 1;
-spi_env_config m_spi_env_cfg;
-gpio_env_config m_gpio_env_cfg;
-ahb_agent_config m_ahb_agent_cfg;
-virtual icpit_if ICPIT;
+    bit has_gpio_env = 1;
+    bit has_virtual_sequencer = 1;
+    bit has_ahb_agent = 1;
+    spi_env_config m_spi_env_cfg;
+    gpio_env_config m_gpio_env_cfg;
+    ahb_agent_config m_ahb_agent_cfg;
+    virtual icpit_if ICPIT;
 
 // ------------------------- register model handle -----------------------
 
