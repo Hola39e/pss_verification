@@ -19,5 +19,6 @@ package ahb_agent_pkg;
     `include "ahb_seq.svh"
     `include "ahb_write_seq.svh"
     `include "ahb_read_seq.svh"
+    `include "ahb_register_adapter.svh"
     //`include "ahb_register_adapter.svh"
 endpackage

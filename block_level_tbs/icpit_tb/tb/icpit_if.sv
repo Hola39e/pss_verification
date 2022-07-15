@@ -1,4 +1,4 @@
-interface icpit_if
+interface icpit_if;
 	logic PCLK;
 	logic PRESTn;
 	logic IRQ;

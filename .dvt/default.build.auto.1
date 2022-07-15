@@ -1,7 +1,7 @@
 ################################################################################
 #                    DO NOT MANUALLY EDIT THIS FILE!                           #
 ################################################################################
-# This file contains the automatically generated build configuration (2022/07/06 21:25:32)
+# This file contains the automatically generated build configuration (2022/07/15 17:03:09)
 # requested at line 3 in /home/e611hx/code/verifi/pss_rebuild/pss_verification/.dvt/default.build
 
 
@@ -14,13 +14,22 @@
 +incdir+agents/ahb_agent
 +incdir+agents/apb_agent
 +incdir+agents/gpio_agent
-+incdir+agents/register_layering
++incdir+agents/spi_agent
 +incdir+agents/uart_agent
 +incdir+block_level_tbs/gpio_tb/env
 +incdir+block_level_tbs/gpio_tb/gpio_rgm_test
-+incdir+block_level_tbs/gpio_tb/register_model
-+incdir+block_level_tbs/gpio_tb/test
++incdir+block_level_tbs/spi_tb/env
++incdir+block_level_tbs/spi_tb/test
 +incdir+rtl/gpio/rtl/verilog
++incdir+rtl/spi/rtl/verilog
++incdir+sub_system_tbs/pss_tb/env
++incdir+sub_system_tbs/pss_tb/sequences
+
+### AUTOCONFIG ERROR: Unresolved includes
+# The following includes could not be resolved:
+#`include "gpio_outputs_vseq.svh" in pss_vseq_lib_pkg.sv (/home/e611hx/code/verifi/pss_rebuild/pss_verification/sub_system_tbs/pss_tb/sequences/pss_vseq_lib_pkg.sv)
+#`include "spi_interrupt_vseq.svh" in pss_vseq_lib_pkg.sv (/home/e611hx/code/verifi/pss_rebuild/pss_verification/sub_system_tbs/pss_tb/sequences/pss_vseq_lib_pkg.sv)
+#`include "spi_polling_vseq.svh" in pss_vseq_lib_pkg.sv (/home/e611hx/code/verifi/pss_rebuild/pss_verification/sub_system_tbs/pss_tb/sequences/pss_vseq_lib_pkg.sv)
 
 # Available `ifdef / `ifndef controls:
 # +define+GPIO_AUX_IMPLEMENT
@@ -51,29 +60,58 @@
 # +define+GPIO_WB_BYTES2
 # +define+GPIO_WB_BYTES3
 # +define+GPIO_WB_BYTES4
+# +define+SPI_DIVIDER_LEN_16
+# +define+SPI_DIVIDER_LEN_24
+# +define+SPI_DIVIDER_LEN_32
+# +define+SPI_DIVIDER_LEN_8
+# +define+SPI_MAX_CHAR_128
+# +define+SPI_MAX_CHAR_16
+# +define+SPI_MAX_CHAR_24
+# +define+SPI_MAX_CHAR_32
+# +define+SPI_MAX_CHAR_64
+# +define+SPI_MAX_CHAR_8
+# +define+SPI_SS_NB_16
+# +define+SPI_SS_NB_24
+# +define+SPI_SS_NB_32
+# +define+SPI_SS_NB_8
 
 ../uvm_register-2.0/src/uvm_register_pkg.sv
 ./block_level_tbs/gpio_tb/register_model/*_pkg.sv
-./block_level_tbs/gpio_tb/register_model/*_pkg.sv
 agents/uart_agent/uart_agent_pkg.sv
-agents/register_layering/register_layering_pkg.sv
 agents/apb_agent/apb_agent_pkg.sv
 agents/ahb_agent/ahb_agent_pkg.sv
+agents/spi_agent/spi_agent_pkg.sv
+block_level_tbs/spi_tb/sequences/spi_sequence_lib_pkg.sv
 agents/gpio_agent/gpio_agent_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_sequence_lib_pkg.sv
 block_level_tbs/gpio_tb/env/gpio_env_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_rgm_bus_seq_lib_pkg.sv
 block_level_tbs/gpio_tb/sequences/gpio_rgm_virtual_sequence_pkg.sv
-block_level_tbs/gpio_tb/sequences/gpio_bus_sequence_lib_pkg.sv
-block_level_tbs/gpio_tb/sequences/gpio_virtual_sequence_lib_pkg.sv
-block_level_tbs/gpio_tb/test/gpio_test_lib_pkg.sv
 block_level_tbs/gpio_tb/gpio_rgm_test/gpio_rgm_test_lib_pkg.sv
-agents/apb_agent/apb_register_adapter.svh
+block_level_tbs/spi_tb/uvm_register_model/spi_reg_pkg.sv
+block_level_tbs/spi_tb/env/spi_env_pkg.sv
+sub_system_tbs/pss_tb/env/pss_env_pkg.sv
+block_level_tbs/spi_tb/sequences/spi_bus_sequence_lib_pkg.sv
+sub_system_tbs/pss_tb/sequences/pss_vseq_lib_pkg.sv
+block_level_tbs/spi_tb/sequences/spi_virtual_seq_lib_pkg.sv
+block_level_tbs/spi_tb/test/spi_test_lib_pkg.sv
+rtl/spi/rtl/verilog/spi_clgen.v
+rtl/spi/rtl/verilog/spi_top.v
+rtl/spi/rtl/verilog/spi_shift.v
+sub_system_tbs/pss_tb/sequences/gpio_output_vseq.svh
 block_level_tbs/gpio_tb/tb/top_tb.sv
 rtl/gpio/rtl/verilog/gpio_top.v
+block_level_tbs/icpit_tb/tb/top_tb.sv
+block_level_tbs/spi_tb/tb/top_tb.sv
 agents/ahb_agent/ahb_if.sv
 agents/apb_agent/apb_if.sv
 agents/gpio_agent/gpio_if.sv
+agents/spi_agent/spi_if.sv
 agents/uart_agent/serial_if.sv
 block_level_tbs/gpio_tb/tb/intr_if.sv
+block_level_tbs/icpit_tb/tb/icpit_if.sv
+block_level_tbs/spi_tb/tb/intr_if.sv
+block_level_tbs/spi_tb/uvm_register_model/._spi_reg_pkg.sv
+rtl/gpio/rtl/verilog/timescale.v
+sub_system_tbs/pss_tb/register_model/pss_register_model.sv
 

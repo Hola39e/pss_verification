@@ -1,0 +1,130 @@
+# vsim -voptargs="+acc" -c -do "run -all" top_tb "+UVM_TESTNAME=gpio_rgm_input_read_test" 
+# Start time: 20:59:14 on Jul 12,2022
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 2021.2_1 linux_x86_64 May 15 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.apb_if(fast)
+# Loading work.gpio_if(fast)
+# Loading work.intr_if(fast)
+# Loading mtiUvm.uvm_pkg(fast)
+# Loading work.gpio_register_model_pkg(fast)
+# Loading work.apb_agent_pkg(fast)
+# Loading work.gpio_agent_pkg(fast)
+# Loading work.gpio_sequence_lib_pkg(fast)
+# Loading work.gpio_env_pkg(fast)
+# Loading work.gpio_rgm_bus_seq_lib_pkg(fast)
+# Loading work.gpio_rgm_virtual_sequence_pkg(fast)
+# Loading work.gpio_rgm_test_lib_pkg(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# Loading work.top_tb(fast)
+# Loading work.apb_if(fast__2)
+# Loading work.gpio_if(fast__2)
+# Loading work.intr_if(fast__2)
+# Loading work.gpio_top(fast)
+# Loading /home/e611hx/questasim/uvm-1.1d/linux_x86_64/uvm_dpi.so
+# run -all
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+# UVM_INFO @ 0: reporter [RNTST] Running test gpio_rgm_input_read_test...
+# UVM_INFO ../env/gpio_env.svh(39) @ 0: uvm_test_top.m_env [ENV BUILD] config has sent
+# UVM_INFO ../env/gpio_env.svh(93) @ 0: uvm_test_top.m_env [RGM in env set] now go to this
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 11000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 17000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 23000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 29000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 35000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 41000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 47000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 53000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 59000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_bus_seq_lib_pkg.sv(78) @ 65000: uvm_test_top.m_env.m_apb_agent.m_sequencer@@gpi_reg_reset_check [SEQ] RESET PASS
+# UVM_INFO ../sequences/gpio_rgm_virtual_sequence_pkg.sv(110) @ 65000: uvm_test_top.m_env.m_v_sqr@@test_seq [SEQ] run sequence over
+# UVM_INFO ../../../agents/gpio_agent/gpio_seq_item.svh(34) @ 65000: uvm_test_top.m_env.m_GPI_agent.m_sequencer@@gpio_rand_seq.rand_pkt [gpio_seq_item] AFTER RANDOMIZATION 
+# =======================================
+# reg_base_sequence object content is as below: 
+# 
+#  GPIO	3571dec8
+#  use_ext_clk	e56e7e24
+#  ext_clk_edge	45e2b114
+#  ext_clk	0
+# =======================================
+# 
+# UVM_INFO ../../../agents/gpio_agent/gpio_seq_item.svh(34) @ 104000: uvm_test_top.m_env.m_GPI_agent.m_sequencer@@gpio_rand_seq.rand_pkt [gpio_seq_item] AFTER RANDOMIZATION 
+# =======================================
+# reg_base_sequence object content is as below: 
+# 
+#  GPIO	d65ac07f
+#  use_ext_clk	93f133e1
+#  ext_clk_edge	7f29d4ba
+#  ext_clk	0
+# =======================================
+# 
+# UVM_INFO ../../../agents/gpio_agent/gpio_seq_item.svh(34) @ 142000: uvm_test_top.m_env.m_GPI_agent.m_sequencer@@gpio_rand_seq.rand_pkt [gpio_seq_item] AFTER RANDOMIZATION 
+# =======================================
+# reg_base_sequence object content is as below: 
+# 
+#  GPIO	59e0c46f
+#  use_ext_clk	3696fa14
+#  ext_clk_edge	11c00c4b
+#  ext_clk	0
+# =======================================
+# 
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 165000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../env/gpio_in_scoreboard.svh(374) @ 165000: uvm_test_top.m_env.m_in_sb [GPIO_IN_SB] Test Passed - No GPI or interrupt read errors
+# UVM_INFO ../env/gpio_out_scoreboard.svh(427) @ 165000: uvm_test_top.m_env.m_out_sb [GPIO_OUTPUT_SB] Test passed: no errors detected
+# UVM_INFO ../env/gpio_out_scoreboard.svh(428) @ 165000: uvm_test_top.m_env.m_out_sb [GPIO_OUTPUT_SB] 0 GPOE changes detected 0 GPO changes detected
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :   23
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [ENV BUILD]     1
+# [GPIO_IN_SB]     1
+# [GPIO_OUTPUT_SB]     2
+# [Questa UVM]     2
+# [RGM in env set]     1
+# [RNTST]     1
+# [SEQ]    11
+# [TEST_DONE]     1
+# [gpio_seq_item]     3
+# ** Note: $finish    : /home/e611hx/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 1650 ns  Iteration: 54  Instance: /top_tb
+# End time: 20:59:19 on Jul 12,2022, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 0

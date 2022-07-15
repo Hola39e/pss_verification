@@ -1,4 +1,4 @@
-class pss_vseq_base extends uvm_sequence #(uvm_seqeunce_item);
+class pss_vseq_base extends uvm_sequence #(uvm_sequence_item);
     `uvm_object_utils(pss_vseq_base)
 
     function new(string name = "pss_vseq_base");
